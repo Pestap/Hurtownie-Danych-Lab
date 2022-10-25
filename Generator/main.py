@@ -1,16 +1,36 @@
-# This is a sample Python script.
+# do uzupełnienia współrzędne
 
-# Press Shift+F10 to execute it or replace it with your code.
-# Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
+cities = {
+    ("Gdynia", 54.521299, 18.529363),
+    ("Gdańsk", 54.355576, 18.643762),
+    ("Warszawa", 52.228842, 21.004143),
+    ("Kraków", 50.068133, 19.947853),
+    ("Poznań", 52.402947, 16.912091),
+    ("Szczecin", 53.418070, 14.548652),
+    ("Białystok", 53.133272, 23.135023),
+    ("Olsztyn", 53.785647, 20.496411),
+    ("Rzeszów", 50.043042, 22.006011),
+    ("Łódź", 51.769580, 19.464495),
+    ("Katowice", 50.257079, 19.017134),
+    ("Kołobrzeg", 0,0),
+    ("Bydgoszcz",0,0),
+    ("Toruń",0,0),
+    ("Suwałki",0,0),
+    ("Lublin",0,0),
+    ("Zakopane",0,0),
+    ("Gliwice",0,0),
+    ("Opole",0,0),
+    ("Jelenia Góra",0,0),
+    ("Zgorzelec",0,0),
+    ("Zielona Góra",0,0),
+    ("Tczew",0,0),
+    ("Kutno",0,0),
+    ("Elbląg",0,0),
+    ("Słupsk",0,0),
+    ("Radom",0,0),
+    ("Kielce",0,0),
+    ("Częstochowa",0,0),
+    ("Iława",0,0),
+}
 
-
-def print_hi(name):
-    # Use a breakpoint in the code line below to debug your script.
-    print(f'Hi, {name}')  # Press Ctrl+F8 to toggle the breakpoint.
-
-
-# Press the green button in the gutter to run the script.
-if __name__ == '__main__':
-    print_hi('PyCharm')
-
-# See PyCharm help at https://www.jetbrains.com/help/pycharm/
+print(len(cities))
