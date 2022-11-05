@@ -1,37 +1,67 @@
 # do uzupełnienia współrzędne
-
+# dopisac licz
 cities = {
-    ("Gdynia", 54.521299, 18.529363),
-    ("Gdańsk", 54.355576, 18.643762),
-    ("Warszawa", 52.228842, 21.004143),
-    ("Kraków", 50.068133, 19.947853),
-    ("Poznań", 52.402947, 16.912091),
-    ("Szczecin", 53.418070, 14.548652),
-    ("Białystok", 53.133272, 23.135023),
-    ("Olsztyn", 53.785647, 20.496411),
-    ("Rzeszów", 50.043042, 22.006011),
-    ("Łódź", 51.769580, 19.464495),
-    ("Katowice", 50.257079, 19.017134),
-    ("Koszalin", 51.190194, 16.167601),
-    ("Bydgoszcz", 53.135806, 17.933008),
-    ("Toruń", 53.026402, 18.633792),
-    ("Suwałki", 53.105627, 22.945121),
-    ("Lublin", 51.228749, 22.564697),
-    ("Zakopane", 49.300791, 19.962889),
-    ("Gliwice", 50.300811, 18.677516),
-    ("Opole", 50.662250, 17.927164),
-    ("Jelenia Góra", 50.902293, 15.757610),
-    ("Wrocław", 51.098405, 17.035916),
-    ("Zielona Góra", 51.947593, 15.511199),
-    ("Tczew", 54.097959, 18.789244),
-    ("Kutno", 52.227818, 19.347300),
-    ("Elbląg", 54.150875, 19.417410),
-    ("Słupsk", 54.467102, 17.015377),
-    ("Radom", 51.390394, 21.156035),
-    ("Kielce", 50.873494, 20.617694),
-    ("Częstochowa", 50.808467, 19.120782),
-    ("Iława", 53.581652, 19.573589),
+    ("Gdynia", 54.521299, 18.529363, ), #0
+    ("Gdańsk", 54.355576, 18.643762), #1
+    ("Warszawa", 52.228842, 21.004143), #2
+    ("Kraków", 50.068133, 19.947853), #3
+    ("Poznań", 52.402947, 16.912091), #4
+    ("Szczecin", 53.418070, 14.548652), #5
+    ("Białystok", 53.133272, 23.135023), #6
+    ("Olsztyn", 53.785647, 20.496411), #7
+    ("Rzeszów", 50.043042, 22.006011), #8
+    ("Łódź", 51.769580, 19.464495), #9
+    ("Katowice", 50.257079, 19.017134), #10
+    ("Bydgoszcz", 53.135806, 17.933008), #11
+    ("Toruń", 53.026402, 18.633792), #12
+    ("Lublin", 51.228749, 22.564697), #13
+    ("Zakopane", 49.300791, 19.962889), #14
+    ("Jelenia Góra", 50.902293, 15.757610), #15
+    ("Wrocław", 51.098405, 17.035916), #16
+    ("Kielce", 50.873494, 20.617694), #17
+    ("Częstochowa", 50.808467, 19.120782), #18
 }
+
+#tuple indexes (bidirectional
+connections = {
+    (0, 1), (0, 2), (0, 4), (0, 5), (0, 9), (0, 11), (0, 12), (0, 14), (0, 15), (0, 16),
+    (1, 2), (1, 3), (1, 6), (1, 7), (1, 11), (1, 12)
+    (2, 3), (2, 4), (2, 5), (2, 6), (2, 8), (2, 9), (2, 10), (2, 13), (2, 15), (2, 17),
+    (3, 5), (3, 7), (3, 8), (3, 9), (3, 12), (3, 14), (3, 16), (3, 17), (3, 18),
+    (4, 5), (4, 7), (4, 8), (4, 9), (4, 10), (4, 11), (4, 16), (4, 18),
+    (5, 8), (5, 9), (5, 10), (5, 16), (5, 17), (5, 18),
+    (6, 7), (6, 8), (6, 12), (6, 13), (6,17),
+    (7, 11), (7, 12), (7, 13),
+    (8, 9), (8, 10), (8, 13), (8, 16), (8, 17), (8, 18),
+    (9, 10), (9, 11), (9, 14), (9, 15), (9, 16), (9, 17), (9,18),
+    (10, 11), (10, 13), (10, 14), (10, 16), (10, 17), (10, 18),
+    (11, 12), (11, 16), (11, 16),
+    (12, 13), (12, 17), (12, 18),
+    (13, 16), (13, 17),
+    (14, 16),
+    (15, 16),
+    (16, 18),
+    (17, 18)
+}
+
+
+# OPIS LOSOWANIA
+# 1. Tworzymy lokomotywy i maszynistów (maszynisci = 1.5 lokomotywy, wagonow 10* lokomotywy i rozmieszczamy proporcjonalnie)
+# 2. kazdej lokomotywe umieszczamy w stacji bazowej (tworzymy zbiory lokomotyw i wagonow na stacjach)
+# 3. patrzymy na kursy dostepne z stacji bazowej i wybieramy jeden oraz wybieramy lokomotywe i wagony (ilosc losowo (1-7))
+# 4. realizujemy kurs z maksymalna dozowloną predkością ( + 0-25 % czasu losowo) zabierajac lokomotywe i wagony ze stacji
+# i dodajac je do innej (to samo robimy z maszynistami)
+# 5. z prawodopodbienstwem wynoszącym dlugosc kursu/100  % losujemy awarie (w przypadku lokomotyw * 3)
+# 6. powtarzamy kolejno dla lokomotyw az do uzyskania odpowiedniej ilosci
+#
+# Lokomotywy mają czas dostępności - kiedy mozna ich uzyć, początkowo wszystkie podobny, po rozpoczeciu kursu ustawiany na jego zakonczenie
+# kolejka lokomotyw i wagonow na kazdej stacji
+#
+# pociagi jezdza falowo
+# wszystkie jadą - dojezdzają do celu, znowu jadą
+# stacje maja 3 zbiory: maszynistow, wagonow i lokomotyw - na poczatku losujemy maszyniste, lokootywe i wagony
+# globalny czas: od startu inkremetnowany o najdluzszy przejazd + 15 minut
+# powtarzamy do momentu kiedy uzysakmy zadaną liczbę kursów (np. 500 000)
 
 locomotive_models = {
     #model #produced_from #produced_to #power [kW] #type #vmax[km/h] #waga [t]
