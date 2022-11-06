@@ -5,3 +5,6 @@ class Station:
         self.y_position = y_position
         self.number_of_platforms = number_of_platforms
         self.capacity = capacity
+        self.locomotives = []
+        self.carriages = []
+        self.drivers = []
