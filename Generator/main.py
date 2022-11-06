@@ -204,6 +204,8 @@ courses, c_cars, loc_fails, car_fails ,x ,y= generate_courses_from_given_state(s
 for cours in courses:
    print(cours.toBulk())
 
+# Bulki do bazy danych
+
 bulk_file = open("courseCarriage.bulk", "w")
 for c_car in c_cars:
     bulk_file.write(c_car.toBulk() + "\n")
@@ -239,3 +241,45 @@ for st in stations:
     bulk_file.write(st.toBulk() + "\n")
     #print(st.toBulk())
 bulk_file.close()
+
+# Generacja arkusza
+
+wb = Workbook()
+
+sheet1 = wb.add_sheet('Arkusz1')
+sheet1.write(0, 0, "Nr rej. lokomotywy")
+sheet1.write(0, 1, "Id maszynisty")
+sheet1.write(0, 2, "Data zgloszenia")
+sheet1.write(0, 3, "Typ awarii")
+sheet1.write(0, 4, "Koszt naprawy")
+
+index = 1
+for loc_fail in loc_fails:
+    #print(loc_fail)
+    loc_fail_data = loc_fail.split(";")
+    sheet1.write(index, 0, loc_fail_data[0])
+    sheet1.write(index, 1, loc_fail_data[1])
+    sheet1.write(index, 2, loc_fail_data[2])
+    sheet1.write(index, 3, loc_fail_data[3])
+    sheet1.write(index, 4, loc_fail_data[4])
+    index += 1
+
+sheet2 = wb.add_sheet('Arkusz2')
+sheet2.write(0, 0, "Nr rej. wagonu")
+sheet2.write(0, 1, "Id maszynisty")
+sheet2.write(0, 2, "Data zgloszenia")
+sheet2.write(0, 3, "Typ awarii")
+sheet2.write(0, 4, "Koszt naprawy")
+
+index = 1
+for car_fail in car_fails:
+    #print(car_fail)
+    car_fail_data = car_fail.split(";")
+    sheet2.write(index, 0, car_fail_data[0])
+    sheet2.write(index, 1, car_fail_data[1])
+    sheet2.write(index, 2, car_fail_data[2])
+    sheet2.write(index, 3, car_fail_data[3])
+    sheet2.write(index, 4, car_fail_data[4])
+    index += 1
+
+wb.save('awarie.xls')
