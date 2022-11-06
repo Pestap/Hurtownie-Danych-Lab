@@ -8,7 +8,7 @@ import random
 import geopy.distance
 from datetime import date, timedelta, datetime
 from generateFailures import generateFailureCarriage
-from generateFailures import  generateFailureLocomotive
+from generateFailures import generateFailureLocomotive
 
 def generate_courses_from_given_state(stations, connections, start_date, number_of_courses, start_id =0):
     courses = []
@@ -17,6 +17,7 @@ def generate_courses_from_given_state(stations, connections, start_date, number_
     car_failures =[]
     course_id = start_id
     start_time = start_date
+    start_time = start_time.replace(microsecond=0)
     for i in range(number_of_courses // len(stations)):
         # select station
 
@@ -26,10 +27,10 @@ def generate_courses_from_given_state(stations, connections, start_date, number_
             if len(station.locomotives) != 0 and len(station.carriages) != 0 and len(station.drivers) != 0:
                 valid_stations.append(station)
 
-
+        print("valid stations are: " +str(len(valid_stations)))
         for start_station in valid_stations:
             #select locomotive
-            locomotive = start_station.locomotives.pop()
+            locomotive = start_station.locomotives.pop(0)
             #select carriages
             upper_bound = 5
             if len(start_station.carriages) < upper_bound:
@@ -40,14 +41,14 @@ def generate_courses_from_given_state(stations, connections, start_date, number_
 
             carriages = []
 
-            for j in range(upper_bound):
-                car = start_station.carriages.pop()
+            for j in range(number_of_carriages):
+                car = start_station.carriages.pop(0)
                 course_carriage.append(CourseCarriage(car.id, course_id))
                 carriages.append(car)
 
 
             #select driver
-            driver = start_station.drivers.pop()
+            driver = start_station.drivers.pop(0)
 
             #select end station
 
@@ -93,6 +94,8 @@ def generate_courses_from_given_state(stations, connections, start_date, number_
             start = start_time
             end = start + time_datetime
 
+            start = start.replace(microsecond=0)
+            end = end.replace(microsecond=0)
             #issues
             if random.random() <= 0.05:
                 #locomotive failure
@@ -111,11 +114,9 @@ def generate_courses_from_given_state(stations, connections, start_date, number_
             number_of_passangers = random.randint(1,total_capacity)
 
 
-            course = Course(course_id, start_station.name +"-"+destination.name, start, end, distance,
-                            time_in_hours, number_of_passangers, locomotive, start_station, destination,driver, carriages)
+            course = Course(course_id, start_station.name +"-"+destination.name, start, end, round(distance,2),
+                            round(time_in_hours,2), number_of_passangers, locomotive, start_station, destination,driver, carriages)
             courses.append(course)
-            if course.start_station == course.end_station:
-                print("TEST")
             # move train and driver
 
             destination.locomotives.append(locomotive)
@@ -126,6 +127,8 @@ def generate_courses_from_given_state(stations, connections, start_date, number_
             course_id += 1
 
         start_time += longest_time
-
-    return courses, course_carriage, loc_failures, car_failures
+        start_time += timedelta(minutes=15)
+        for cours in courses:
+            print(cours.toBulk())
+    return courses, course_carriage, loc_failures, car_failures, stations, start_time
 

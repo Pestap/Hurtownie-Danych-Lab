@@ -195,7 +195,7 @@ for i in range(len(connections_array)-1):
 #maszynisci
 
 
-courses, c_cars, loc_fails, car_fails = generate_courses_from_given_state(stations, connections_array, datetime.now(), 200)
+courses, c_cars, loc_fails, car_fails ,x ,y= generate_courses_from_given_state(stations, connections_array, datetime.now(), 200)
 
 
 for cours in courses:
