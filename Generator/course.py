@@ -11,3 +11,6 @@ class Course:
         self.start_station = start_station
         self.end_station = end_station
         self.driver = driver
+
+    def toBulk(self):
+        return str(self.id) + "," + str(self.name) + "," + str(self.start_date) + "," + str(self.end_date) + "," + str(self.length) + "," + str(self.time) + "," + str(self.number_of_passangers)+ "," + str(self.locomotive) + "," + str(self.start_station) + "," + str(self.end_station) + "," + str(self.driver)

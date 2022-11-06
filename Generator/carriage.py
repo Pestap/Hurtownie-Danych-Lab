@@ -7,3 +7,6 @@ class Carriage:
         self.vmax = vmax
         self.mass = mass
         self.station = station
+    
+    def toBulk(self):
+        return str(self.id) + "," + str(self.model) + "," + str(self.prod_date) + "," + str(self.capacity) + "," + str(self.vmax) + "," + str(self.mass) + "," + str(self.station)
