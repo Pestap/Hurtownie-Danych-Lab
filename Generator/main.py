@@ -6,6 +6,9 @@ from station import Station
 import random
 from datetime import date, timedelta, datetime
 from generateCourses import generate_courses_from_given_state
+import xlwt
+from xlwt import Workbook
+
 NUMBER_OF_LOCOMOTIVES = 20
 
 # do uzupełnienia współrzędne
@@ -200,3 +203,39 @@ courses, c_cars, loc_fails, car_fails = generate_courses_from_given_state(statio
 
 for cours in courses:
    print(cours.toBulk())
+
+bulk_file = open("courseCarriage.bulk", "w")
+for c_car in c_cars:
+    bulk_file.write(c_car.toBulk() + "\n")
+    #print(c_car.toBulk())
+bulk_file.close()
+
+bulk_file = open("course.bulk", "w")
+for cours in courses:
+    bulk_file.write(cours.toBulk() + "\n")
+    #print(cours.toBulk())
+bulk_file.close()
+
+bulk_file = open("driver.bulk", "w")
+for driv in drivers:
+    bulk_file.write(cours.toBulk() + "\n")
+    #print(driv.toBulk())
+bulk_file.close()
+
+bulk_file = open("locomotive.bulk", "w")
+for loc in locomotives:
+    bulk_file.write(loc.toBulk() + "\n")
+    #print(loc.toBulk())
+bulk_file.close()
+
+bulk_file = open("carriage.bulk", "w")
+for carr in carriages:
+    bulk_file.write(carr.toBulk() + "\n")
+    #print(carr.toBulk())
+bulk_file.close()
+
+bulk_file = open("station.bulk", "w")
+for st in stations:
+    bulk_file.write(st.toBulk() + "\n")
+    #print(st.toBulk())
+bulk_file.close()
