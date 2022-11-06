@@ -26,7 +26,8 @@ def generate_courses_from_given_state(stations, connections, start_date, number_
             if len(station.locomotives) != 0 and len(station.carriages) != 0 and len(station.drivers) != 0:
                 valid_stations.append(station)
 
-        for idx, start_station in enumerate(valid_stations):
+
+        for start_station in valid_stations:
             #select locomotive
             locomotive = start_station.locomotives.pop()
             #select carriages
@@ -54,7 +55,14 @@ def generate_courses_from_given_state(stations, connections, start_date, number_
 
             possible_destinations = []
 
-            for i, e in enumerate(connections[idx]):
+            #find station idx
+            stat_idx = 0
+            for idx, s in enumerate(stations):
+                if s == start_station:
+                    stat_idx = idx
+
+
+            for i, e in enumerate(connections[stat_idx]):
                 if e == 1:
                     possible_destinations.append(i)
 
@@ -106,7 +114,8 @@ def generate_courses_from_given_state(stations, connections, start_date, number_
             course = Course(course_id, start_station.name +"-"+destination.name, start, end, distance,
                             time_in_hours, number_of_passangers, locomotive, start_station, destination,driver, carriages)
             courses.append(course)
-
+            if course.start_station == course.end_station:
+                print("TEST")
             # move train and driver
 
             destination.locomotives.append(locomotive)
@@ -115,8 +124,6 @@ def generate_courses_from_given_state(stations, connections, start_date, number_
                 destination.carriages.append(car)
 
             course_id += 1
-        else:
-            print("DUPA")
 
         start_time += longest_time
 

@@ -167,7 +167,9 @@ for tuple in connections:
     connections_array[tuple[1]][tuple[0]] = 1
 
 
-
+for i in range(len(connections_array)-1):
+    if connections_array[i][i] == 1:
+        print("DUpa")
 
 # OPIS LOSOWANIA
 # 1. Tworzymy lokomotywy i maszynistów (maszynisci = 1.5 lokomotywy, wagonow 10* lokomotywy i rozmieszczamy proporcjonalnie)
@@ -193,8 +195,8 @@ for tuple in connections:
 #maszynisci
 
 
-courses, c_cars, loc_fails, car_fails = generate_courses_from_given_state(stations,connections_array, datetime.now(), 200)
+courses, c_cars, loc_fails, car_fails = generate_courses_from_given_state(stations, connections_array, datetime.now(), 200)
 
 
 for cours in courses:
-    print(cours.toBulk())
+   print(cours.toBulk())
