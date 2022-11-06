@@ -220,7 +220,7 @@ bulk_file.close()
 
 bulk_file = open("driver.bulk", "w")
 for driv in drivers:
-    bulk_file.write(cours.toBulk() + "\n")
+    bulk_file.write(driv.toBulk() + "\n")
     #print(driv.toBulk())
 bulk_file.close()
 
