@@ -8,3 +8,6 @@ class Station:
         self.locomotives = []
         self.carriages = []
         self.drivers = []
+        
+    def toBulk(self):
+        return self.name + "," + str(self.number_of_platforms) + "," + str(self.capacity)
