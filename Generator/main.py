@@ -63,6 +63,20 @@ surnames = ["Nowak", "Wójcik", "Kowalczyk", "Pesta", "Woźniak", "Mazur",
             "Krawczyk", "Zając", "Wróbel", "Stępień", "Sikora", "Małysz", "Stoch", "Baran",
             "Duda", "Bąk", "Wilk"]
 
+failures_lokomotywa = [
+    "Awaria silnika",
+    "Awaria komputera",
+    "Awaria hamulca",
+    "Awaria elektroniki"
+]
+
+failures2_wagon = [
+    "Awaria elektroniki",
+    "Awaria podwozia",
+    "Awaria drzwi",
+    "Awaria klimatyzacji"
+]
+
 #GENERATE Stations
 stations = []
 
