@@ -4,8 +4,8 @@ from driver import Driver
 from locomotive import Locomotive
 from station import Station
 import random
-from datetime import date, timedelta
-
+from datetime import date, timedelta, datetime
+from generateCourses import generate_courses_from_given_state
 NUMBER_OF_LOCOMOTIVES = 20
 
 # do uzupełnienia współrzędne
@@ -179,6 +179,5 @@ for tuple in connections:
 #maszynisci
 
 
-
-
-print(len(cities))
+courses = generate_courses_from_given_state(stations,connections_array, datetime.now(), 20)
+print(len(courses))
