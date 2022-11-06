@@ -193,5 +193,8 @@ for tuple in connections:
 #maszynisci
 
 
-courses = generate_courses_from_given_state(stations,connections_array, datetime.now(), 20)
-print(len(courses))
+courses, c_cars, loc_fails, car_fails = generate_courses_from_given_state(stations,connections_array, datetime.now(), 200)
+
+
+for cours in courses:
+    print(cours.toBulk())

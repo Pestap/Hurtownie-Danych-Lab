@@ -14,4 +14,4 @@ class Course:
         self.carriages = carriages
 
     def toBulk(self):
-        return str(self.id) + "," + str(self.name) + "," + str(self.start_date) + "," + str(self.end_date) + "," + str(self.length) + "," + str(self.time) + "," + str(self.number_of_passangers)+ "," + str(self.locomotive) + "," + str(self.start_station) + "," + str(self.end_station) + "," + str(self.driver)
+        return str(self.id) + "," + str(self.name) + "," + str(self.start_date) + "," + str(self.end_date) + "," + str(self.length) + "," + str(self.time) + "," + str(self.number_of_passangers)+ "," + str(self.locomotive.id) + "," + str(self.start_station.name) + "," + str(self.end_station.name) + "," + str(self.driver.id)
