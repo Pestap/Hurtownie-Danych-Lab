@@ -87,7 +87,7 @@ carriage_index = 0
 for i in range(NUMBER_OF_LOCOMOTIVES*10):
     carriage_model = random.choice(carriage_models)
     production_date = random.randint(carriage_model[1], carriage_model[2])
-    carriages.append(Carriage("W"+str(carriage_index)), )
+    carriages.append(Carriage("W"+str(carriage_index), carriage_model[0], production_date, carriage_model[3], carriage_model[4], carriage_model[5], random.choice(stations)))
 
 
 #tuple indexes (bidirectional
@@ -121,6 +121,7 @@ for i in range(19):
 for tuple in connections:
     connections_array[tuple[0]][tuple[1]] = 1
     connections_array[tuple[1]][tuple[0]] = 1
+
 
 
 
