@@ -4,6 +4,7 @@ from driver import Driver
 from locomotive import Locomotive
 from station import Station
 import random
+from datetime import date, timedelta
 
 NUMBER_OF_LOCOMOTIVES = 20
 
@@ -54,9 +55,9 @@ carriage_models = [
     ("B91", 1991, 1992, 66, 160, 38),
     ("Z1B", 1996, 1997, 66, 200, 49)
 ]
-names = [ "Adam", "Piotr", "Marek", "Grzegorz", "Anna", "Jan", "Filip", "Szymon",
-          "Stanisław", "Wojciech", "Mikołaj", "Wiktor", "Joanna", "Elżbieta", "Henryk",
-          "Andrzej", "Jarosław"
+names = [ ("Adam", "male"), ("Piotr", "male"), ("Marek", "male"), ("Grzegorz", "male"), ("Anna", "female"), ("Jan", "male"), ("Filip", "male"), ("Szymon", "male"),
+          ("Stanisław", "male"), ("Wojciech", "male"), ("Mikołaj", "male"), ("Wiktor", "male"), ("Joanna", "female"), ("Elżbieta", "female"), ("Henryk", "male"),
+          ("Andrzej", "male"), ("Jarosław", "male")
 ]
 surnames = ["Nowak", "Wójcik", "Kowalczyk", "Pesta", "Woźniak", "Mazur",
             "Krawczyk", "Zając", "Wróbel", "Stępień", "Sikora", "Małysz", "Stoch", "Baran",
@@ -77,9 +78,13 @@ for i in range(NUMBER_OF_LOCOMOTIVES):
     locomotive_model = random.choice(locomotive_models)
     production_date = random.randint(locomotive_model[1], locomotive_model[2])
 
-    locomotives.append(Locomotive("L" + str(loc_index), locomotive_model[0],
+    station = random.choice(stations)
+    locomotive = Locomotive("L" + str(loc_index), locomotive_model[0],
                                   production_date, locomotive_model[3],
-                                  locomotive_model[4], locomotive_model[5], locomotive_model[6], random.choice(stations)))
+                                  locomotive_model[4], locomotive_model[5], locomotive_model[6], station)
+    locomotives.append(locomotive)
+    station.locomotives.append(locomotive)
+
     loc_index+=1
 
 carriages = []
@@ -87,11 +92,36 @@ carriage_index = 0
 for i in range(NUMBER_OF_LOCOMOTIVES*10):
     carriage_model = random.choice(carriage_models)
     production_date = random.randint(carriage_model[1], carriage_model[2])
-    carriages.append(Carriage("W"+str(carriage_index), carriage_model[0], production_date, carriage_model[3], carriage_model[4], carriage_model[5], random.choice(stations)))
+    station = random.choice(stations)
+    carriage = Carriage("W"+str(carriage_index), carriage_model[0], production_date, carriage_model[3], carriage_model[4], carriage_model[5], station)
+    carriages.append(carriage)
+    station.carriages.append(carriage)
+    carriage_index += 1
+
+#GENERATE drivers
+
+drivers=[]
+driver_id = 0
+lowest_date = date(1957, 11, 1)
+end_date = date(2000, 11, 1)
+dates_dif = end_date - lowest_date
+total_days = dates_dif.days
+for i in range(NUMBER_OF_LOCOMOTIVES *2):
+    name_sex = random.choice(names)
+    surname = random.choice(surnames)
+    name = name_sex[0]
+    sex = name_sex[1]
+    dateOfBirth = lowest_date + timedelta(days=random.randint(0, total_days))
+    driver = Driver(driver_id, name, surname, dateOfBirth,sex)
+    drivers.append(driver)
+    random.choice(stations).drivers.append(driver)
+    driver_id += 1
+
+
 
 
 #tuple indexes (bidirectional
-connections = {
+connections = [
     (0, 1), (0, 2), (0, 4), (0, 5), (0, 9), (0, 11), (0, 12), (0, 14), (0, 15), (0, 16),
     (1, 2), (1, 3), (1, 6), (1, 7), (1, 11), (1, 12),
     (2, 3), (2, 4), (2, 5), (2, 6), (2, 8), (2, 9), (2, 10), (2, 13), (2, 15), (2, 17),
@@ -110,7 +140,7 @@ connections = {
     (15, 16),
     (16, 18),
     (17, 18)
-}
+]
 
 connections_array =[]
 
