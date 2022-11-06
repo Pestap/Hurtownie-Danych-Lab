@@ -115,8 +115,6 @@ for i in range(NUMBER_OF_LOCOMOTIVES *2):
     driver = Driver(driver_id, name, surname, dateOfBirth,sex)
     drivers.append(driver)
     random.choice(stations).drivers.append(driver)
-
-    )
     driver_id += 1
 
 
