@@ -1,14 +1,10 @@
 #-*- coding: utf-8 -*-
 
-from carriage import Carriage
-from course import Course
-from driver import Driver
-from locomotive import Locomotive
-from station import Station
-from courseCarriage import CourseCarriage
+from objects.course import Course
+from objects.courseCarriage import CourseCarriage
 import random
 import geopy.distance
-from datetime import date, timedelta, datetime
+from datetime import timedelta
 from generateFailures import generateFailureCarriage
 from generateFailures import generateFailureLocomotive
 
@@ -133,5 +129,5 @@ def generate_courses_from_given_state(stations, connections, start_date, number_
         start_time += longest_time
         start_time += timedelta(minutes=15)
 
-    return courses, course_carriage, loc_failures, car_failures, stations, start_time
+    return courses, course_carriage, loc_failures, car_failures, start_time
 
