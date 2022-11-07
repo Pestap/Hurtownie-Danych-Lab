@@ -108,7 +108,7 @@ for i in range(NUMBER_OF_LOCOMOTIVES):
 
 carriages = []
 carriage_index = 0
-for i in range(NUMBER_OF_LOCOMOTIVES*10):
+for i in range(NUMBER_OF_LOCOMOTIVES*20):
     carriage_model = random.choice(carriage_models)
     production_date = random.randint(carriage_model[1], carriage_model[2])
     station = random.choice(stations)
@@ -171,11 +171,6 @@ for tuple in connections:
     connections_array[tuple[0]][tuple[1]] = 1
     connections_array[tuple[1]][tuple[0]] = 1
 
-
-for i in range(len(connections_array)-1):
-    if connections_array[i][i] == 1:
-        print("DUpa")
-
 # OPIS LOSOWANIA
 # 1. Tworzymy lokomotywy i maszynistów (maszynisci = 1.5 lokomotywy, wagonow 10* lokomotywy i rozmieszczamy proporcjonalnie)
 # 2. kazdej lokomotywe umieszczamy w stacji bazowej (tworzymy zbiory lokomotyw i wagonow na stacjach)
@@ -193,20 +188,13 @@ for i in range(len(connections_array)-1):
 # id kursow inkrementowane za kazdym razem
 
 
+#T1
+courses, c_cars, loc_fails, car_fails ,x ,end_time= generate_courses_from_given_state(stations, connections_array, datetime.now(), 1000000)
 
-
-#nr rejestracyjne wagonow i lokomotyw to liczby całkowite (mogą być od 1 do N)
-
-#maszynisci
-
-
-courses, c_cars, loc_fails, car_fails ,x ,y= generate_courses_from_given_state(stations, connections_array, datetime.now(), 200)
-
-
-for cours in courses:
-   print(cours.toBulk())
 
 # Bulki do bazy danych
+
+print("Przed bulkami")
 
 bulk_file = open("courseCarriage.bulk", "w")
 for c_car in c_cars:
@@ -285,3 +273,18 @@ for car_fail in car_fails:
     index += 1
 
 wb.save('awarie.xls')
+
+
+
+
+print("Wygenerowano początkowe T1")
+
+courses_2, c_cars2, loc_fails2, car_fails2 ,x ,end_time= generate_courses_from_given_state(stations, connections_array, end_time, 200, len(courses))
+
+#for course in courses_2:
+#   print(course.toBulk())
+
+
+print("Wszystkie kursy:" + str(len(courses + courses_2)))
+#for course in courses + courses_2:
+    #print(course.toBulk())

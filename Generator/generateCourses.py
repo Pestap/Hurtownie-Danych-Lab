@@ -20,7 +20,8 @@ def generate_courses_from_given_state(stations, connections, start_date, number_
     course_id = start_id
     start_time = start_date
     start_time = start_time.replace(microsecond=0)
-    for i in range(number_of_courses // len(stations)):
+    #for i in range(number_of_courses // len(stations)):
+    while len(courses) < number_of_courses:
         # select station
 
         longest_time = timedelta() # 0 seconds
@@ -29,17 +30,18 @@ def generate_courses_from_given_state(stations, connections, start_date, number_
             if len(station.locomotives) != 0 and len(station.carriages) != 0 and len(station.drivers) != 0:
                 valid_stations.append(station)
 
-        print("valid stations are: " +str(len(valid_stations)))
         for start_station in valid_stations:
             #select locomotive
             locomotive = start_station.locomotives.pop(0)
             #select carriages
             upper_bound = 5
             if len(start_station.carriages) < upper_bound:
-                upper_bound = len(start_station.carriages) // 2
-            if upper_bound == 0 :
-                break
-            number_of_carriages = random.randint(1, upper_bound)
+                upper_bound = len(start_station.carriages) // 3
+
+            number_of_carriages = 0
+
+            if upper_bound != 0:
+                number_of_carriages = random.randint(1, upper_bound)
 
             carriages = []
 
@@ -113,7 +115,7 @@ def generate_courses_from_given_state(stations, connections, start_date, number_
             for car in carriages:
                 total_capacity+= car.capacity
 
-            number_of_passangers = random.randint(1,total_capacity)
+            number_of_passangers = random.randint(0, total_capacity)
 
 
             course = Course(course_id, start_station.name +"-"+destination.name, start, end, round(distance,2),
@@ -130,7 +132,6 @@ def generate_courses_from_given_state(stations, connections, start_date, number_
 
         start_time += longest_time
         start_time += timedelta(minutes=15)
-        for cours in courses:
-            print(cours.toBulk())
+
     return courses, course_carriage, loc_failures, car_failures, stations, start_time
 
