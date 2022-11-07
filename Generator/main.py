@@ -205,3 +205,17 @@ for car_fail in car_fails2:
     index_car += 1
 
 wb_t2.save('excel/awarie_t2.xls')
+
+#BULKI
+
+bulk_file = open("bulks/courseCarriage2.bulk", "w")
+for c_car in c_cars2:
+    bulk_file.write(c_car.toBulk() + "\n")
+    #print(c_car.toBulk())
+bulk_file.close()
+
+bulk_file = open("bulks/course2.bulk", "w")
+for cours in courses_2:
+    bulk_file.write(cours.toBulk() + "\n")
+    #print(cours.toBulk())
+bulk_file.close()
