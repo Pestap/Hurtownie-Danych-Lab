@@ -95,45 +95,74 @@ bulk_file.close()
 
 # Generacja arkusza
 
-wb = Workbook()
+wb_t1 = Workbook()
+wb_t2 = Workbook()
 
-sheet1 = wb.add_sheet('Arkusz1')
-sheet1.write(0, 0, "Nr rej. lokomotywy")
-sheet1.write(0, 1, "Id maszynisty")
-sheet1.write(0, 2, "Data zgloszenia")
-sheet1.write(0, 3, "Typ awarii")
-sheet1.write(0, 4, "Koszt naprawy")
+sheet1_t1 = wb_t1.add_sheet('Lokomotywy')
+sheet1_t1.write(0, 0, "Nr rej. lokomotywy")
+sheet1_t1.write(0, 1, "Id maszynisty")
+sheet1_t1.write(0, 2, "Data zgloszenia")
+sheet1_t1.write(0, 3, "Typ awarii")
+sheet1_t1.write(0, 4, "Koszt naprawy")
 
-index = 1
+sheet1_t2 = wb_t2.add_sheet('Lokomotywy')
+sheet1_t2.write(0, 0, "Nr rej. lokomotywy")
+sheet1_t2.write(0, 1, "Id maszynisty")
+sheet1_t2.write(0, 2, "Data zgloszenia")
+sheet1_t2.write(0, 3, "Typ awarii")
+sheet1_t2.write(0, 4, "Koszt naprawy")
+
+index_loc = 1
 for loc_fail in loc_fails:
     #print(loc_fail)
     loc_fail_data = loc_fail.split(";")
-    sheet1.write(index, 0, loc_fail_data[0])
-    sheet1.write(index, 1, loc_fail_data[1])
-    sheet1.write(index, 2, loc_fail_data[2])
-    sheet1.write(index, 3, loc_fail_data[3])
-    sheet1.write(index, 4, loc_fail_data[4])
-    index += 1
+    sheet1_t1.write(index_loc, 0, loc_fail_data[0])
+    sheet1_t1.write(index_loc, 1, loc_fail_data[1])
+    sheet1_t1.write(index_loc, 2, loc_fail_data[2])
+    sheet1_t1.write(index_loc, 3, loc_fail_data[3])
+    sheet1_t1.write(index_loc, 4, loc_fail_data[4])
 
-sheet2 = wb.add_sheet('Arkusz2')
-sheet2.write(0, 0, "Nr rej. wagonu")
-sheet2.write(0, 1, "Id maszynisty")
-sheet2.write(0, 2, "Data zgloszenia")
-sheet2.write(0, 3, "Typ awarii")
-sheet2.write(0, 4, "Koszt naprawy")
+    sheet1_t2.write(index_loc, 0, loc_fail_data[0])
+    sheet1_t2.write(index_loc, 1, loc_fail_data[1])
+    sheet1_t2.write(index_loc, 2, loc_fail_data[2])
+    sheet1_t2.write(index_loc, 3, loc_fail_data[3])
+    sheet1_t2.write(index_loc, 4, loc_fail_data[4])
 
-index = 1
+    index_loc += 1
+
+sheet2_t1 = wb_t1.add_sheet('Wagony')
+sheet2_t1.write(0, 0, "Nr rej. wagonu")
+sheet2_t1.write(0, 1, "Id maszynisty")
+sheet2_t1.write(0, 2, "Data zgloszenia")
+sheet2_t1.write(0, 3, "Typ awarii")
+sheet2_t1.write(0, 4, "Koszt naprawy")
+
+sheet2_t2 = wb_t2.add_sheet('Wagony')
+sheet2_t2.write(0, 0, "Nr rej. wagonu")
+sheet2_t2.write(0, 1, "Id maszynisty")
+sheet2_t2.write(0, 2, "Data zgloszenia")
+sheet2_t2.write(0, 3, "Typ awarii")
+sheet2_t2.write(0, 4, "Koszt naprawy")
+
+index_car = 1
 for car_fail in car_fails:
     #print(car_fail)
     car_fail_data = car_fail.split(";")
-    sheet2.write(index, 0, car_fail_data[0])
-    sheet2.write(index, 1, car_fail_data[1])
-    sheet2.write(index, 2, car_fail_data[2])
-    sheet2.write(index, 3, car_fail_data[3])
-    sheet2.write(index, 4, car_fail_data[4])
-    index += 1
+    sheet2_t1.write(index_car, 0, car_fail_data[0])
+    sheet2_t1.write(index_car, 1, car_fail_data[1])
+    sheet2_t1.write(index_car, 2, car_fail_data[2])
+    sheet2_t1.write(index_car, 3, car_fail_data[3])
+    sheet2_t1.write(index_car, 4, car_fail_data[4])
 
-wb.save('excel/awarie.xls')
+    sheet2_t2.write(index_car, 0, car_fail_data[0])
+    sheet2_t2.write(index_car, 1, car_fail_data[1])
+    sheet2_t2.write(index_car, 2, car_fail_data[2])
+    sheet2_t2.write(index_car, 3, car_fail_data[3])
+    sheet2_t2.write(index_car, 4, car_fail_data[4])
+
+    index_car += 1
+
+wb_t1.save('excel/awarie_t1.xls')
 
 
 
@@ -142,3 +171,28 @@ print("Wygenerowano początkowe T1")
 
 courses_2, c_cars2, loc_fails2, car_fails2, end_time = generate_courses_from_given_state(stations, connections_array, end_time, 50, len(courses))
 
+for loc_fail in loc_fails2:
+    #print(loc_fail)
+    loc_fail_data = loc_fail.split(";")
+
+    sheet1_t2.write(index_loc, 0, loc_fail_data[0])
+    sheet1_t2.write(index_loc, 1, loc_fail_data[1])
+    sheet1_t2.write(index_loc, 2, loc_fail_data[2])
+    sheet1_t2.write(index_loc, 3, loc_fail_data[3])
+    sheet1_t2.write(index_loc, 4, loc_fail_data[4])
+
+    index_loc += 1
+
+for car_fail in car_fails2:
+    #print(car_fail)
+    car_fail_data = car_fail.split(";")
+
+    sheet2_t2.write(index_car, 0, car_fail_data[0])
+    sheet2_t2.write(index_car, 1, car_fail_data[1])
+    sheet2_t2.write(index_car, 2, car_fail_data[2])
+    sheet2_t2.write(index_car, 3, car_fail_data[3])
+    sheet2_t2.write(index_car, 4, car_fail_data[4])
+
+    index_car += 1
+
+wb_t2.save('excel/awarie_t2.xls')
