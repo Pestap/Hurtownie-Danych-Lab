@@ -53,7 +53,7 @@ connections_array = connections_array()
 drivers = generate_drivers(stations)
 start_date = datetime.now()
 #T1
-courses, c_cars, loc_fails, car_fails, end_time = generate_courses_from_given_state(stations, connections_array, start_date, 100)
+courses, c_cars, loc_fails, car_fails, end_time = generate_courses_from_given_state(stations, connections_array, start_date, 1000)
 
 #BULKI
 
@@ -135,10 +135,19 @@ for car_fail in car_fails:
 
 wb.save('excel/awarie.xls')
 
+print("Wygenerowano początkowe T1" + str(len(courses)))
+
+
+#modyfikacje
+for locomotive in locomotives:
+    if locomotive.model == "EU07":
+        locomotive.vmax = 140
+    if locomotive.model == "EP09":
+        locomotive.model = "EP09A"
 
 
 
-print("Wygenerowano początkowe T1")
+
 
 courses_2, c_cars2, loc_fails2, car_fails2, end_time = generate_courses_from_given_state(stations, connections_array, end_time, 50, len(courses))
 
