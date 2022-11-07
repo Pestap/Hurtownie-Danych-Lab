@@ -1,3 +1,5 @@
+#-*- coding: utf-8 -*-
+
 from carriage import Carriage
 from course import Course
 from driver import Driver

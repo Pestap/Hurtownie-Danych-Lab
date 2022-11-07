@@ -1,3 +1,5 @@
+#-*- coding: utf-8 -*-
+
 class CourseCarriage:
     def __init__(self, carriage_id, course_id):
         self.carriage_id = carriage_id

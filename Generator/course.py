@@ -1,3 +1,5 @@
+#-*- coding: utf-8 -*-
+
 class Course:
     def __init__(self, id, name, start_date, end_date, length, time, number_of_passangers, locomotive, start_station, end_station, driver, carriages):
         self.id = id
