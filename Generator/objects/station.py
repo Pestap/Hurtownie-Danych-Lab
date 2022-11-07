@@ -1,3 +1,5 @@
+#-*- coding: utf-8 -*-
+
 class Station:
     def __init__(self, name, x_position, y_position, number_of_platforms, capacity):
         self.name = name

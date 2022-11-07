@@ -1,3 +1,5 @@
+#-*- coding: utf-8 -*-
+
 class Driver:
     def __init__(self, id, name, surname, dateOfBirth, sex):
         self.id = id

@@ -1,0 +1,10 @@
+venv/
+Generator/__pycache__/
+.idea/
+Generator/carriage.bulk
+Generator/course.bulk
+Generator/courseCarriage.bulk
+Generator/driver.bulk
+Generator/locomotive.bulk
+Generator/station.bulk
+Generator/awarie.xls
