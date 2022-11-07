@@ -52,22 +52,6 @@ carriages = generate_carriages(stations)
 connections_array = connections_array()
 drivers = generate_drivers(stations)
 start_date = datetime.now()
-#T1
-courses, c_cars, loc_fails, car_fails, end_time = generate_courses_from_given_state(stations, connections_array, start_date, 1000)
-
-#BULKI
-
-bulk_file = open("bulks/courseCarriage.bulk", "w")
-for c_car in c_cars:
-    bulk_file.write(c_car.toBulk() + "\n")
-    #print(c_car.toBulk())
-bulk_file.close()
-
-bulk_file = open("bulks/course.bulk", "w")
-for cours in courses:
-    bulk_file.write(cours.toBulk() + "\n")
-    #print(cours.toBulk())
-bulk_file.close()
 
 bulk_file = open("bulks/driver.bulk", "w")
 for driv in drivers:
@@ -92,6 +76,25 @@ for st in stations:
     bulk_file.write(st.toBulk() + "\n")
     #print(st.toBulk())
 bulk_file.close()
+
+#T1
+courses, c_cars, loc_fails, car_fails, end_time = generate_courses_from_given_state(stations, connections_array, start_date, 10)
+
+#BULKI
+
+bulk_file = open("bulks/courseCarriage.bulk", "w")
+for c_car in c_cars:
+    bulk_file.write(c_car.toBulk() + "\n")
+    #print(c_car.toBulk())
+bulk_file.close()
+
+bulk_file = open("bulks/course.bulk", "w")
+for cours in courses:
+    bulk_file.write(cours.toBulk() + "\n")
+    #print(cours.toBulk())
+bulk_file.close()
+
+
 
 # Generacja arkusza
 
@@ -164,7 +167,6 @@ for car_fail in car_fails:
 
 wb_t1.save('excel/awarie_t1.xls')
 
-print("Wygenerowano początkowe T1" + str(len(courses)))
 
 
 #modyfikacje
@@ -178,7 +180,7 @@ for locomotive in locomotives:
 
 
 
-courses_2, c_cars2, loc_fails2, car_fails2, end_time = generate_courses_from_given_state(stations, connections_array, end_time, 50, len(courses))
+courses_2, c_cars2, loc_fails2, car_fails2, end_time = generate_courses_from_given_state(stations, connections_array, end_time, 10, len(courses))
 
 for loc_fail in loc_fails2:
     #print(loc_fail)
