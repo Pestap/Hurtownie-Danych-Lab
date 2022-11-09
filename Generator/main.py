@@ -78,7 +78,7 @@ for st in stations:
 bulk_file.close()
 
 #T1
-courses, c_cars, loc_fails, car_fails, end_time = generate_courses_from_given_state(stations, connections_array, start_date, 10)
+courses, c_cars, loc_fails, car_fails, end_time = generate_courses_from_given_state(stations, connections_array, start_date, 50)
 
 #BULKI
 
@@ -180,7 +180,7 @@ for locomotive in locomotives:
 
 
 
-courses_2, c_cars2, loc_fails2, car_fails2, end_time = generate_courses_from_given_state(stations, connections_array, end_time, 10, len(courses))
+courses_2, c_cars2, loc_fails2, car_fails2, end_time = generate_courses_from_given_state(stations, connections_array, end_time, 20, len(courses))
 
 for loc_fail in loc_fails2:
     #print(loc_fail)
