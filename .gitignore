@@ -1,6 +1,7 @@
 venv/
 Generator/__pycache__/
 .idea/
+.vs/
 Generator/carriage.bulk
 Generator/course.bulk
 Generator/courseCarriage.bulk
