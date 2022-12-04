@@ -22,5 +22,6 @@ GO
 
 INSERT INTO MASZYNISTA 
 SELECT * FROM maszynista_etl_view
-
 GO
+
+DROP VIEW maszynista_etl_view
