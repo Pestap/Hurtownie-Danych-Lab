@@ -30,13 +30,13 @@ SELECT DISTINCT
 		WHEN waga < 50 THEN 'œrednia'
 		ELSE 'wysoka'
 	END AS waga_kategoria,
-	ID_stacji as ID_stacji_bazowej,
+	ID_stacji as ID_stacji_bazowej
 FROM TRAINMASTER.dbo.WAGON JOIN PRZEWOZY_POZAREGIONALNE_DW.dbo.STACJA ON  stacja_bazowa = nazwa;
 GO
 
-INSERT INTO LOKOMOTYWA
+INSERT INTO WAGON
 SELECT * FROM wagon_etl_view
 GO
-/*SELECT * FROM lokomotywa_etl_view */
+SELECT * FROM wagon_etl_view 
 
 DROP VIEW wagon_etl_view

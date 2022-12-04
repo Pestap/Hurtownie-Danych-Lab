@@ -31,7 +31,10 @@ SELECT DISTINCT
 		WHEN waga < 100 THEN 'œrednia'
 		ELSE 'wysoka'
 	END AS waga_kategoria,
-	ID_stacji as ID_stacji_bazowej
+	ID_stacji as ID_stacji_bazowej,
+	NULL as ID_daty_wprowadzenia,
+	NULL as ID_daty_dezaktywacji,
+	'True' as aktywny
 FROM TRAINMASTER.dbo.LOKOMOTYWA JOIN PRZEWOZY_POZAREGIONALNE_DW.dbo.STACJA ON  stacja_bazowa_nazwa = nazwa;
 GO
 
