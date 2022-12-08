@@ -38,9 +38,30 @@ SELECT DISTINCT
 FROM TRAINMASTER.dbo.LOKOMOTYWA JOIN PRZEWOZY_POZAREGIONALNE_DW.dbo.STACJA ON  stacja_bazowa_nazwa = nazwa;
 GO
 
-INSERT INTO LOKOMOTYWA
+/*INSERT INTO LOKOMOTYWA
 SELECT * FROM lokomotywa_etl_view
-GO
+GO*/
 /*SELECT * FROM lokomotywa_etl_view */
 
-DROP VIEW lokomotywa_etl_view
+
+
+MERGE INTO PRZEWOZY_POZAREGIONALNE_DW.dbo.LOKOMOTYWA as L USING lokomotywa_etl_view as LV
+ON L.nr_rejestracyjny = LV.nr_rejestracyjny
+WHEN NOT MATCHED THEN 
+	INSERT VALUES(nr_rejestracyjny, model, wiek_kategoria, moc_kategoria, typ, predkosc_max_kategoria,
+	waga_kategoria, ID_stacji_bazowej, ID_daty_wprowadzenia, ID_daty_dezaktywacji, aktywny)
+WHEN MATCHED AND L.aktywny = 'True'
+AND (L.model <> LV.model OR
+	L.wiek_kategoria <> LV.wiek_kategoria OR
+	L.moc_kategoria <> LV.moc_kategoria OR
+	L.typ <> LV.typ OR
+	L.predkosc_max_kategoria <> LV.predkosc_max_kategoria OR
+	L.waga_kategoria <> LV.waga_kategoria OR
+	L.ID_stacji_bazowej <> LV.ID_stacji_bazowej)
+THEN 
+	UPDATE SET L.aktywny = 'False'
+;
+
+SELECT * FROM LOKOMOTYWA
+
+/*DROP VIEW lokomotywa_etl_view*/
