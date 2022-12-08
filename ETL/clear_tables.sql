@@ -10,4 +10,6 @@ DELETE FROM LOKOMOTYWA;
 DELETE FROM STACJA;
 DELETE FROM MASZYNISTA;
 DELETE FROM JUNK;
+DELETE FROM DATA;
+DELETE FROM CZAS;
 /* Pytanie co z junk'ami - tak jak czas i data czy za kazdym razem */

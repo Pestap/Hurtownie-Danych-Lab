@@ -4,7 +4,6 @@ GO
 IF (OBJECT_ID('lokomotywa_etl_view') is not null) DROP View lokomotywa_etl_view;
 GO
 
-
 CREATE VIEW lokomotywa_etl_view
 AS
 SELECT DISTINCT 
@@ -58,10 +57,17 @@ AND (L.model <> LV.model OR
 	L.predkosc_max_kategoria <> LV.predkosc_max_kategoria OR
 	L.waga_kategoria <> LV.waga_kategoria OR
 	L.ID_stacji_bazowej <> LV.ID_stacji_bazowej)
-THEN 
+THEN
 	UPDATE SET L.aktywny = 'False'
 ;
 
-SELECT * FROM LOKOMOTYWA
+/* wstawienie nowych */
 
-/*DROP VIEW lokomotywa_etl_view*/
+INSERT INTO LOKOMOTYWA
+SELECT * FROM lokomotywa_etl_view
+EXCEPT
+SELECT nr_rejestracyjny, model, wiek_kategoria, moc_kategoria, typ, predkosc_max_kategoria,
+	waga_kategoria, ID_stacji_bazowej, ID_daty_wprowadzenia, ID_daty_dezaktywacji, aktywny FROM LOKOMOTYWA
+
+
+DROP VIEW lokomotywa_etl_view
