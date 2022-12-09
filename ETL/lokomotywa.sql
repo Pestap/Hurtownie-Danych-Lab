@@ -4,6 +4,7 @@ GO
 IF (OBJECT_ID('lokomotywa_etl_view') is not null) DROP View lokomotywa_etl_view;
 GO
 
+GO
 CREATE VIEW lokomotywa_etl_view
 AS
 SELECT DISTINCT 
@@ -31,24 +32,32 @@ SELECT DISTINCT
 		ELSE 'wysoka'
 	END AS waga_kategoria,
 	ID_stacji as ID_stacji_bazowej,
-	NULL as ID_daty_wprowadzenia,
+	(SELECT [DATA].ID_daty
+	FROM [DATA]
+	WHERE DATEPART(year, GETDATE()) = [DATA].rok
+	AND DATEPART(month, GETDATE()) = [DATA].miesiac
+	AND DATEPART(day, GETDATE()) = [DATA].dzien)
+	as ID_daty_wprowadzenia,
 	NULL as ID_daty_dezaktywacji,
 	'True' as aktywny
 FROM TRAINMASTER.dbo.LOKOMOTYWA JOIN PRZEWOZY_POZAREGIONALNE_DW.dbo.STACJA ON  stacja_bazowa_nazwa = nazwa;
 GO
 
-/*INSERT INTO LOKOMOTYWA
-SELECT * FROM lokomotywa_etl_view
-GO*/
-/*SELECT * FROM lokomotywa_etl_view */
+DECLARE @Today date = GETDATE()
 
+DECLARE @Today_id int
 
+SELECT @Today_id=[DATA].ID_daty
+FROM [DATA]
+WHERE DATEPART(year, @Today) = [DATA].rok
+	AND DATEPART(month, @Today) = [DATA].miesiac
+	AND DATEPART(day, @Today) = [DATA].dzien
 
 MERGE INTO PRZEWOZY_POZAREGIONALNE_DW.dbo.LOKOMOTYWA as L USING lokomotywa_etl_view as LV
 ON L.nr_rejestracyjny = LV.nr_rejestracyjny
 WHEN NOT MATCHED THEN 
 	INSERT VALUES(nr_rejestracyjny, model, wiek_kategoria, moc_kategoria, typ, predkosc_max_kategoria,
-	waga_kategoria, ID_stacji_bazowej, ID_daty_wprowadzenia, ID_daty_dezaktywacji, aktywny)
+	waga_kategoria, ID_stacji_bazowej, @Today_id, ID_daty_dezaktywacji, aktywny)
 WHEN MATCHED AND L.aktywny = 'True'
 AND (L.model <> LV.model OR
 	L.wiek_kategoria <> LV.wiek_kategoria OR
@@ -58,16 +67,21 @@ AND (L.model <> LV.model OR
 	L.waga_kategoria <> LV.waga_kategoria OR
 	L.ID_stacji_bazowej <> LV.ID_stacji_bazowej)
 THEN
-	UPDATE SET L.aktywny = 'False'
+	UPDATE SET L.aktywny = 'False', L.ID_daty_dezaktywacji = @Today_id
 ;
 
 /* wstawienie nowych */
+
+SELECT * FROM LOKOMOTYWA
+
 
 INSERT INTO LOKOMOTYWA
 SELECT * FROM lokomotywa_etl_view
 EXCEPT
 SELECT nr_rejestracyjny, model, wiek_kategoria, moc_kategoria, typ, predkosc_max_kategoria,
 	waga_kategoria, ID_stacji_bazowej, ID_daty_wprowadzenia, ID_daty_dezaktywacji, aktywny FROM LOKOMOTYWA
+
+
 
 
 DROP VIEW lokomotywa_etl_view

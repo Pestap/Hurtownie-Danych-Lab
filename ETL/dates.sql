@@ -4,7 +4,7 @@ GO
 Declare @StartDate date;
 Declare @EndDate date;
 
-SELECT @StartDate = '2022-11-01', @EndDate = '2032-11-01';
+SELECT @StartDate = '2022-11-01', @EndDate = '2099-11-01';
 
 Declare @CurrentDate date = @StartDate
 
