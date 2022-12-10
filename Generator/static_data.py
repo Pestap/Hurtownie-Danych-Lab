@@ -12,7 +12,7 @@ NUMBER_OF_LOCOMOTIVES = 20
 # do uzupełnienia współrzędne
 # dopisac liczbe ludnosci - wplyw na liczbe pasazerow i wagonow
 cities = [
-    ("Gdynia", 54.521299, 18.529363, ), #0
+    ("Gdynia", 54.521299, 18.529363), #0
     ("Gdańsk", 54.355576, 18.643762), #1
     ("Warszawa", 52.228842, 21.004143), #2
     ("Kraków", 50.068133, 19.947853), #3

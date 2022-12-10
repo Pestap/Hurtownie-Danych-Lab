@@ -97,6 +97,7 @@ bulk_file.close()
 
 
 # Generacja arkusza
+#TODO: Zmienić na jeden arkusz
 
 wb_t1 = Workbook()
 wb_t2 = Workbook()
@@ -194,6 +195,7 @@ for loc_fail in loc_fails2:
 
     index_loc += 1
 
+#TODO: Zmienić na jeden arkusz
 for car_fail in car_fails2:
     #print(car_fail)
     car_fail_data = car_fail.split(";")
