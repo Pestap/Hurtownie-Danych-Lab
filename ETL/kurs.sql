@@ -71,13 +71,14 @@ JOIN PRZEWOZY_POZAREGIONALNE_DW.dbo.JUNK as JUNK ON TRAINMASTER.dbo.KURS.nazwa_p
 GO
 
 
-
-
-INSERT INTO KURS
-SELECT dlugosc, czas_trwania, liczba_pasazerow, max_liczba_pasazerow, predkosc_max, predkosc_avg, ID_lokomotywy, ID_stacji_pocz¹tkowej,
-		ID_stacji_koncowej, ID_maszynisty, ID_czasu_rozpoczecia, ID_daty_rozpoczecia, ID_czasu_zakonczenia, ID_daty_zakonczenia, ID_junk
-FROM kurs_etl_view
-GO
+MERGE INTO PRZEWOZY_POZAREGIONALNE_DW.dbo.KURS as K USING kurs_etl_view as KV
+ON K.ID_lokomotywy = KV.ID_lokomotywy
+AND K.ID_maszynisty = KV.ID_maszynisty
+AND K.ID_czasu_rozpoczecia = KV.ID_czasu_rozpoczecia
+WHEN NOT MATCHED THEN 
+	INSERT VALUES(dlugosc, czas_trwania, liczba_pasazerow, max_liczba_pasazerow, predkosc_max, predkosc_avg, ID_lokomotywy, ID_stacji_pocz¹tkowej,
+		ID_stacji_koncowej, ID_maszynisty, ID_czasu_rozpoczecia, ID_daty_rozpoczecia, ID_czasu_zakonczenia, ID_daty_zakonczenia, ID_junk)
+;
 
 
 DROP VIEW kurs_etl_view

@@ -34,9 +34,10 @@ SELECT DISTINCT
 FROM TRAINMASTER.dbo.WAGON JOIN PRZEWOZY_POZAREGIONALNE_DW.dbo.STACJA ON  stacja_bazowa = nazwa;
 GO
 
-INSERT INTO WAGON
-SELECT * FROM wagon_etl_view
-GO
-SELECT * FROM wagon_etl_view 
+MERGE INTO PRZEWOZY_POZAREGIONALNE_DW.dbo.WAGON as W USING wagon_etl_view as WV
+ON W.nr_rejestracyjny = WV.nr_rejestracyjny
+WHEN NOT MATCHED THEN 
+	INSERT VALUES(nr_rejestracyjny, model, wiek_kategoria, max_liczba_pasazerow_kategoria, predkosc_max_kategoria, waga_kategoria, ID_stacji_bazowej)
+;
 
 DROP VIEW wagon_etl_view

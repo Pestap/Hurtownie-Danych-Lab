@@ -20,8 +20,12 @@ SELECT DISTINCT
 FROM TRAINMASTER.dbo.MASZYNISTA;
 GO
 
-INSERT INTO MASZYNISTA 
-SELECT * FROM maszynista_etl_view
-GO
+
+MERGE INTO PRZEWOZY_POZAREGIONALNE_DW.dbo.MASZYNISTA as M USING maszynista_etl_view as MV
+ON MV.ID_firmowe_maszynisty = MV.ID_firmowe_maszynisty
+WHEN NOT MATCHED THEN 
+	INSERT VALUES(ID_firmowe_maszynisty, imie_nazwisko, wiek_kategoria, plec)
+;
+
 
 DROP VIEW maszynista_etl_view

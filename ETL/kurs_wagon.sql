@@ -29,8 +29,11 @@ JOIN PRZEWOZY_POZAREGIONALNE_DW.dbo.KURS AS KURS_DW ON
 	AND T_DW.ID_czasu = KURS_DW.ID_czasu_rozpoczecia
 GO
 
-INSERT INTO KURS_WAGON
-SELECT * FROM kurs_wagon_etl_view
-GO
+MERGE INTO PRZEWOZY_POZAREGIONALNE_DW.dbo.KURS_WAGON as KW USING kurs_wagon_etl_view as KWV
+ON KW.ID_wagonu = KWV.ID_wagonu
+AND KWV.ID_kursu = KWV.ID_kursu
+WHEN NOT MATCHED THEN 
+	INSERT VALUES(ID_wagonu, ID_kursu)
+;
 
 DROP VIEW kurs_wagon_etl_view

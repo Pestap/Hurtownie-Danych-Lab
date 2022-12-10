@@ -21,10 +21,10 @@ SELECT DISTINCT
 FROM TRAINMASTER.dbo.STACJA;
 GO
 
-INSERT INTO STACJA
-SELECT * FROM stacja_etl_view
-GO
+MERGE INTO PRZEWOZY_POZAREGIONALNE_DW.dbo.STACJA as S USING stacja_etl_view as SV
+ON S.nazwa = SV.nazwa
+WHEN NOT MATCHED THEN 
+	INSERT VALUES(nazwa, liczba_peronow_kategoria, pojemnosc_kategoria)
+;
 
-
-SELECT * FROM STACJA
 DROP VIEW stacja_etl_view

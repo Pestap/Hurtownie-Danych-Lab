@@ -22,6 +22,8 @@ JOIN PRZEWOZY_POZAREGIONALNE_DW.dbo.DATA as DATA_AWARII ON
 	AND DATEPART(DAY,AWARIE_LOKOMOTYW_AUX.data_zgloszenia) = DATA_AWARII.dzien;
 GO
 
+SELECT * FROM awaria_lokomotywy_etl_view
+
 MERGE INTO PRZEWOZY_POZAREGIONALNE_DW.dbo.AWARIA_LOKOMOTYWY as AL USING awaria_lokomotywy_etl_view as ALV
 ON AL.ID_lokomotywy = ALV.ID_lokomotywy 
 AND AL.ID_daty_zgloszenia = ALV.ID_daty_zgloszenia

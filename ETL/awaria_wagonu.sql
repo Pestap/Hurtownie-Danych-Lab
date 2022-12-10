@@ -19,9 +19,16 @@ JOIN PRZEWOZY_POZAREGIONALNE_DW.dbo.DATA as DATA_AWARII ON
 	AND DATEPART(DAY,AWARIE_WAGONOW_AUX.data_zgloszenia) = DATA_AWARII.dzien;
 GO
 
-INSERT INTO AWARIA_WAGONU
-SELECT * FROM awaria_wagonu_etl_view
-GO
+MERGE INTO PRZEWOZY_POZAREGIONALNE_DW.dbo.AWARIA_WAGONU as AW USING awaria_wagonu_etl_view as AWV
+ON AW.ID_wagonu = AWV.ID_wagonu 
+AND AW.ID_daty_zgloszenia = AWV.ID_daty_zgloszenia
+AND AW.ID_zglaszajcego_maszynisty = AWV.ID_zglaszajacego_maszynisty
+AND AW.koszt_naprawy = AWV.koszt_naprawy
+AND AW.ID_junk_awarii = AWV.ID_junk_awarii
+WHEN NOT MATCHED THEN
+	INSERT VALUES(ID_wagonu, ID_daty_zgloszenia,ID_zglaszajacego_maszynisty, koszt_naprawy,ID_junk_awarii)
+;
 
+GO
 DROP VIEW awaria_wagonu_etl_view
 DROP TABLE AWARIE_WAGONOW_AUX

@@ -1,16 +1,26 @@
 USE PRZEWOZY_POZAREGIONALNE_DW
 GO
 
-
-INSERT INTO JUNK_AWARII(typ_awarii)
-VALUES	('Awaria silnika'),
-		('Awaria komputera'),
-		('Awaria hamulca'),
-		('Awaria elektroniki'),
-		('Awaria podwozia'),
-		('Awaria drzwi'),
-		('Awaria klimatyzacji')
-
-
-SELECT * FROM JUNK_AWARII
+IF (OBJECT_ID('junk_awarii_etl_view') is not null) DROP View junk_awarii_etl_view;
 GO
+
+
+CREATE VIEW junk_awarii_etl_view AS
+	SELECT DISTINCT 
+		AWARIE_LOKOMOTYW_AUX.typ_awarii as typ_awarii
+	FROM PRZEWOZY_POZAREGIONALNE_DW.dbo.AWARIE_LOKOMOTYW_AUX
+	UNION
+	SELECT DISTINCT
+		AWARIE_WAGONOW_AUX.typ_awarii as typ_awarii
+	FROM PRZEWOZY_POZAREGIONALNE_DW.dbo.AWARIE_WAGONOW_AUX
+	
+GO
+
+
+MERGE INTO PRZEWOZY_POZAREGIONALNE_DW.dbo.JUNK_AWARII as JA USING junk_awarii_etl_view as JAV
+ON JA.typ_awarii = JAV.typ_awarii
+WHEN NOT MATCHED THEN 
+	INSERT VALUES(typ_awarii)
+;
+
+DROP VIEW junk_awarii_etl_view
