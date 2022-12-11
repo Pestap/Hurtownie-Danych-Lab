@@ -76,6 +76,7 @@ MERGE INTO PRZEWOZY_POZAREGIONALNE_DW.dbo.KURS as K USING kurs_etl_view as KV
 ON (SELECT nr_rejestracyjny FROM LOKOMOTYWA WHERE ID_lokomotywy = K.ID_lokomotywy) = (SELECT nr_rejestracyjny FROM LOKOMOTYWA WHERE ID_lokomotywy = KV.ID_lokomotywy)
 AND K.ID_maszynisty = KV.ID_maszynisty
 AND K.ID_czasu_rozpoczecia = KV.ID_czasu_rozpoczecia
+AND K.ID_daty_rozpoczecia = KV.ID_daty_rozpoczecia
 WHEN NOT MATCHED THEN 
 	INSERT VALUES(dlugosc, czas_trwania, liczba_pasazerow, max_liczba_pasazerow, predkosc_max, predkosc_avg, ID_lokomotywy, ID_stacji_poczatkowej,
 		ID_stacji_koncowej, ID_maszynisty, ID_czasu_rozpoczecia, ID_daty_rozpoczecia, ID_czasu_zakonczenia, ID_daty_zakonczenia, ID_junk)
