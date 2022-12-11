@@ -1,4 +1,5 @@
 #-*- coding: utf-8 -*-
+import shutil
 
 from objects.carriage import Carriage
 from objects.driver import Driver
@@ -8,8 +9,15 @@ import random
 from datetime import date, timedelta, datetime
 from generateCourses import generate_courses_from_given_state
 from xlwt import Workbook
-
+import xlsxwriter
+import pyodbc
 from static_data import *
+
+#CLEAR DB AND DW
+
+
+
+
 
 
 # do uzupełnienia współrzędne
@@ -78,7 +86,7 @@ for st in stations:
 bulk_file.close()
 
 #T1
-courses, c_cars, loc_fails, car_fails, end_time = generate_courses_from_given_state(stations, connections_array, start_date, 50)
+courses, c_cars, loc_fails, car_fails, end_time = generate_courses_from_given_state(stations, connections_array, start_date, 100000)
 
 #BULKI
 
@@ -99,22 +107,15 @@ bulk_file.close()
 # Generacja arkusza
 #TODO: Zmienić na jeden arkusz
 
-wb_t1 = Workbook()
-wb_t2 = Workbook()
+#wb_t1 = Workbook()
+wb_t1 = xlsxwriter.Workbook('excel/awarie.xlsx')
 
-sheet1_t1 = wb_t1.add_sheet('Lokomotywy')
+sheet1_t1 = wb_t1.add_worksheet('Lokomotywy')
 sheet1_t1.write(0, 0, "Nr rej. lokomotywy")
 sheet1_t1.write(0, 1, "Id maszynisty")
 sheet1_t1.write(0, 2, "Data zgloszenia")
 sheet1_t1.write(0, 3, "Typ awarii")
 sheet1_t1.write(0, 4, "Koszt naprawy")
-
-sheet1_t2 = wb_t2.add_sheet('Lokomotywy')
-sheet1_t2.write(0, 0, "Nr rej. lokomotywy")
-sheet1_t2.write(0, 1, "Id maszynisty")
-sheet1_t2.write(0, 2, "Data zgloszenia")
-sheet1_t2.write(0, 3, "Typ awarii")
-sheet1_t2.write(0, 4, "Koszt naprawy")
 
 index_loc = 1
 for loc_fail in loc_fails:
@@ -126,27 +127,15 @@ for loc_fail in loc_fails:
     sheet1_t1.write(index_loc, 3, loc_fail_data[3])
     sheet1_t1.write(index_loc, 4, loc_fail_data[4])
 
-    sheet1_t2.write(index_loc, 0, loc_fail_data[0])
-    sheet1_t2.write(index_loc, 1, loc_fail_data[1])
-    sheet1_t2.write(index_loc, 2, loc_fail_data[2])
-    sheet1_t2.write(index_loc, 3, loc_fail_data[3])
-    sheet1_t2.write(index_loc, 4, loc_fail_data[4])
 
     index_loc += 1
 
-sheet2_t1 = wb_t1.add_sheet('Wagony')
+sheet2_t1 = wb_t1.add_worksheet('Wagony')
 sheet2_t1.write(0, 0, "Nr rej. wagonu")
 sheet2_t1.write(0, 1, "Id maszynisty")
 sheet2_t1.write(0, 2, "Data zgloszenia")
 sheet2_t1.write(0, 3, "Typ awarii")
 sheet2_t1.write(0, 4, "Koszt naprawy")
-
-sheet2_t2 = wb_t2.add_sheet('Wagony')
-sheet2_t2.write(0, 0, "Nr rej. wagonu")
-sheet2_t2.write(0, 1, "Id maszynisty")
-sheet2_t2.write(0, 2, "Data zgloszenia")
-sheet2_t2.write(0, 3, "Typ awarii")
-sheet2_t2.write(0, 4, "Koszt naprawy")
 
 index_car = 1
 for car_fail in car_fails:
@@ -157,17 +146,10 @@ for car_fail in car_fails:
     sheet2_t1.write(index_car, 2, car_fail_data[2])
     sheet2_t1.write(index_car, 3, car_fail_data[3])
     sheet2_t1.write(index_car, 4, car_fail_data[4])
-
-    sheet2_t2.write(index_car, 0, car_fail_data[0])
-    sheet2_t2.write(index_car, 1, car_fail_data[1])
-    sheet2_t2.write(index_car, 2, car_fail_data[2])
-    sheet2_t2.write(index_car, 3, car_fail_data[3])
-    sheet2_t2.write(index_car, 4, car_fail_data[4])
-
     index_car += 1
 
-wb_t1.save('excel/awarie_t1.xls')
-
+#wb_t1.save('excel/awarie_t1.xls')
+wb_t1.close()
 
 
 #modyfikacje
@@ -178,12 +160,36 @@ for locomotive in locomotives:
         locomotive.model = "EP09A"
 
 
+#shutil.copy('excel/awarie_t1.xls','excel/awarie.xls')
+
+
+print("EXECUTE SQL SCRIPTS!!!")
+print("Press any key to generate T2 files:")
+input()
+
+courses_2, c_cars2, loc_fails2, car_fails2, end_time = generate_courses_from_given_state(stations, connections_array, end_time, 50000, len(courses))
 
 
 
-courses_2, c_cars2, loc_fails2, car_fails2, end_time = generate_courses_from_given_state(stations, connections_array, end_time, 20, len(courses))
+wb_t2 = xlsxwriter.Workbook('excel/awarie.xlsx')
 
-for loc_fail in loc_fails2:
+sheet1_t2 = wb_t2.add_worksheet('Lokomotywy')
+sheet1_t2.write(0, 0, "Nr rej. lokomotywy")
+sheet1_t2.write(0, 1, "Id maszynisty")
+sheet1_t2.write(0, 2, "Data zgloszenia")
+sheet1_t2.write(0, 3, "Typ awarii")
+sheet1_t2.write(0, 4, "Koszt naprawy")
+
+sheet2_t2 = wb_t2.add_worksheet('Wagony')
+sheet2_t2.write(0, 0, "Nr rej. wagonu")
+sheet2_t2.write(0, 1, "Id maszynisty")
+sheet2_t2.write(0, 2, "Data zgloszenia")
+sheet2_t2.write(0, 3, "Typ awarii")
+sheet2_t2.write(0, 4, "Koszt naprawy")
+
+
+index_loc=1
+for loc_fail in loc_fails+loc_fails2:
     #print(loc_fail)
     loc_fail_data = loc_fail.split(";")
 
@@ -196,7 +202,8 @@ for loc_fail in loc_fails2:
     index_loc += 1
 
 #TODO: Zmienić na jeden arkusz
-for car_fail in car_fails2:
+index_car=1
+for car_fail in car_fails+car_fails2:
     #print(car_fail)
     car_fail_data = car_fail.split(";")
 
@@ -208,8 +215,7 @@ for car_fail in car_fails2:
 
     index_car += 1
 
-wb_t2.save('excel/awarie_t2.xls')
-
+wb_t2.close()
 #BULKI
 
 bulk_file = open("bulks/courseCarriage2.bulk", "w")
