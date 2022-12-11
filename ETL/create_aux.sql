@@ -44,12 +44,12 @@ GO
 INSERT INTO PRZEWOZY_POZAREGIONALNE_DW.dbo.AWARIE_WAGONOW_AUX
 SELECT *
 FROM OPENDATASOURCE('Microsoft.ACE.OLEDB.12.0',
-    'Data Source=D:\Piotrek\Studia\Semestr 5\Hurtownie danych\Hurtownie-Danych-Lab\Generator\excel\awarie_t1.xls;Extended Properties=Excel 8.0')...[Wagony$];
+    'Data Source=D:\Piotrek\Studia\Semestr 5\Hurtownie danych\Hurtownie-Danych-Lab\Generator\excel\awarie.xlsx;Extended Properties=Excel 8.0')...[Wagony$];
 GO
 USE PRZEWOZY_POZAREGIONALNE_DW
 INSERT INTO PRZEWOZY_POZAREGIONALNE_DW.dbo.AWARIE_LOKOMOTYW_AUX
 SELECT *
 FROM OPENDATASOURCE('Microsoft.ACE.OLEDB.12.0',
-    'Data Source=D:\Piotrek\Studia\Semestr 5\Hurtownie danych\Hurtownie-Danych-Lab\Generator\excel\awarie_t1.xls;Extended Properties=Excel 8.0')...[Lokomotywy$];
+    'Data Source=D:\Piotrek\Studia\Semestr 5\Hurtownie danych\Hurtownie-Danych-Lab\Generator\excel\awarie.xlsx;Extended Properties=Excel 8.0')...[Lokomotywy$];
 GO
 

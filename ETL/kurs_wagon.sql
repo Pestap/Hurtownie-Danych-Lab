@@ -31,7 +31,7 @@ GO
 
 MERGE INTO PRZEWOZY_POZAREGIONALNE_DW.dbo.KURS_WAGON as KW USING kurs_wagon_etl_view as KWV
 ON KW.ID_wagonu = KWV.ID_wagonu
-AND KWV.ID_kursu = KWV.ID_kursu
+AND KW.ID_kursu = KWV.ID_kursu
 WHEN NOT MATCHED THEN 
 	INSERT VALUES(ID_wagonu, ID_kursu)
 ;

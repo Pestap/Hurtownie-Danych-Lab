@@ -19,13 +19,14 @@ JOIN PRZEWOZY_POZAREGIONALNE_DW.dbo.JUNK_AWARII ON AWARIE_LOKOMOTYW_AUX.typ_awar
 JOIN PRZEWOZY_POZAREGIONALNE_DW.dbo.DATA as DATA_AWARII ON
 	DATEPART(YEAR, AWARIE_LOKOMOTYW_AUX.data_zgloszenia) = DATA_AWARII.rok
 	AND DATEPART(MONTH, AWARIE_LOKOMOTYW_AUX.data_zgloszenia) = DATA_AWARII.miesiac
-	AND DATEPART(DAY,AWARIE_LOKOMOTYW_AUX.data_zgloszenia) = DATA_AWARII.dzien;
+	AND DATEPART(DAY,AWARIE_LOKOMOTYW_AUX.data_zgloszenia) = DATA_AWARII.dzien
+WHERE LOKOMOTYWA.aktywny = 'True'
 GO
 
 SELECT * FROM awaria_lokomotywy_etl_view
 
 MERGE INTO PRZEWOZY_POZAREGIONALNE_DW.dbo.AWARIA_LOKOMOTYWY as AL USING awaria_lokomotywy_etl_view as ALV
-ON AL.ID_lokomotywy = ALV.ID_lokomotywy 
+ON (SELECT nr_rejestracyjny FROM LOKOMOTYWA WHERE ID_lokomotywy = AL.ID_lokomotywy) = (SELECT nr_rejestracyjny FROM LOKOMOTYWA WHERE ID_lokomotywy = ALV.ID_lokomotywy)
 AND AL.ID_daty_zgloszenia = ALV.ID_daty_zgloszenia
 AND AL.ID_zglaszajcego_maszynisty = ALV.ID_zglaszajacego_maszynisty
 AND AL.koszt_naprawy = ALV.koszt_naprawy
