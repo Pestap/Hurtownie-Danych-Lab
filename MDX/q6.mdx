@@ -1,0 +1,4 @@
+SELECT
+	{[Measures].[LiczbaPasazerowAVG]} ON COLUMNS,
+	NON EMPTY{[Data Rozpoczêcia Kursu].[Dzien Wolny].Children} ON ROWS
+FROM KURS

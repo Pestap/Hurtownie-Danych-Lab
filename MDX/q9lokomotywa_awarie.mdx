@@ -1,0 +1,4 @@
+SELECT
+	{[Measures].[AWARIA LOKOMOTYWY Count]} ON COLUMNS,
+	NON EMPTY {ORDER([LOKOMOTYWA].[Nr Rejestracyjny].Children,[LOKOMOTYWA].[Nr Rejestracyjny].CurrentMember.Properties("MEMBER_Value"),ASC)} ON ROWS
+FROM AWARIE_LOKOMOTYWY

@@ -1,0 +1,5 @@
+SELECT
+	{[Measures].[AWARIA LOKOMOTYWY Count]} ON COLUMNS,
+	NON EMPTY {[LOKOMOTYWA].[Wiek Kategoria].Children} ON ROWS
+FROM AWARIE_LOKOMOTYWY
+WHERE [Data zg³oszenia].[DateHierarchy].[2022].[12]
