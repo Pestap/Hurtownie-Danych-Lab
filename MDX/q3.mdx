@@ -1,0 +1,6 @@
+/* relacja pomiêdzy wiekiem taboru i liczb¹ pasa¿erów */
+
+SELECT
+	{[Measures].[LiczbaPasazerowAVG]} ON COLUMNS,
+	{[LOKOMOTYWA].[Wiek Kategoria].Children} ON ROWS
+FROM KURS
