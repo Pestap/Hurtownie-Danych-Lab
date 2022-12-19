@@ -1,3 +1,5 @@
+/* Relacje pomiêdzy wiekiem taboru i kosztem awarii */
+
 SELECT
 	{[Measures].[Koszt Naprawy SUM]} ON COLUMNS,
 	NON EMPTY {[LOKOMOTYWA].[Wiek Kategoria].Children} ON ROWS

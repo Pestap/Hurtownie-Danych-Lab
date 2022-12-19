@@ -1,3 +1,5 @@
+/* Relacja pomiêdzy wiekiem taboru i liczba awarii (WAGONY) */
+
 SELECT
 	{[Measures].[AWARIA WAGONU Count]} ON COLUMNS,
 	NON EMPTY {[WAGON].[Wiek Kategoria].Children} ON ROWS

@@ -1,3 +1,5 @@
+/* predkosci wagonów */
+
 SELECT
 	{[Measures].[PredkoscAVG]} ON COLUMNS,
 	NON EMPTY {ORDER([Realizacja Kursu Przez Wagon].[Nr Rejestracyjny].Children,[Realizacja Kursu Przez Wagon].[Nr Rejestracyjny].CurrentMember.Properties("MEMBER_Value"),ASC)} ON ROWS

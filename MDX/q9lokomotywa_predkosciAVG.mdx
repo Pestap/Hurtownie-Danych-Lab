@@ -1,3 +1,5 @@
+/* œrednie prêdkoœci lokomotyw */
+
 SELECT
 	{[Measures].[PredkoscAVG]} ON COLUMNS,
 	NON EMPTY {ORDER([LOKOMOTYWA].[Nr Rejestracyjny].Children,[LOKOMOTYWA].[Nr Rejestracyjny].CurrentMember.Properties("MEMBER_Value"),ASC)} ON ROWS

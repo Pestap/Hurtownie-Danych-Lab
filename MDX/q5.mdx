@@ -1,3 +1,5 @@
+/* najpopularniejsze po³¹czenia */
+
 SELECT
 	{[Measures].[Liczba Pasa¿erów SUM]} ON COLUMNS,
 	TopCount ({([Stacja Pocz¹tkowa Kursu].[Nazwa].Children,[Stacja Koñcowa Kursu].[Nazwa].Children)},10,[Measures].[Liczba Pasa¿erów SUM]) ON ROWS

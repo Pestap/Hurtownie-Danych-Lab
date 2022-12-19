@@ -1,3 +1,5 @@
+/* awarie wagonow */
+
 SELECT
 	{[Measures].[AWARIA WAGONU Count]} ON COLUMNS,
 	NON EMPTY {ORDER([WAGON].[Nr Rejestracyjny].Children,[WAGON].[Nr Rejestracyjny].CurrentMember.Properties("MEMBER_Value"),ASC)} ON ROWS
