@@ -1,0 +1,7 @@
+/* Porównaj œrednie prêdkoœci poci¹gów na ró¿nych trasach w stosunku do poprzednich miesiêcy */
+
+SELECT
+	{[Data Rozpoczêcia Kursu].[DateHierarchy].[2023].[11], [Data Rozpoczêcia Kursu].[DateHierarchy].[2023].[12]} ON COLUMNS,
+	NON EMPTY{([Stacja Pocz¹tkowa Kursu].[Nazwa].Children,[Stacja Koñcowa Kursu].[Nazwa].Children)} ON ROWS
+FROM KURS
+WHERE [Measures].[PredkoscAVG]

@@ -2,6 +2,6 @@
 
 SELECT
 	{[Measures].[Koszt Naprawy SUM]} ON COLUMNS,
-	NON EMPTY {[LOKOMOTYWA].[Wiek Kategoria].Children} ON ROWS
+	NON EMPTY {ORDER([LOKOMOTYWA].[Wiek Kategoria].Children, [Measures].[Koszt Naprawy SUM],ASC)} ON ROWS
 FROM AWARIE_LOKOMOTYWY
 WHERE [Data zg³oszenia].[DateHierarchy].[2025].[12]

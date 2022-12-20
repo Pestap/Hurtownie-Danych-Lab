@@ -2,10 +2,10 @@
 /* DODANE - r騜nica w liczbie awarii */
 
 WITH
-	MEMBER [Data zg這szenia].[DateHierarchy].[2023].[Miesiac].[Roznica] AS '[Data zg這szenia].[DateHierarchy].[2023].[12] - [Data zg這szenia].[DateHierarchy].[2023].[11]'
-
+	MEMBER [Data zg這szenia].[2023].[12].[Roznica] AS '[Data zg這szenia].[DateHierarchy].[2023].[12] - [Data zg這szenia].[DateHierarchy].[2023].[11]'
+	
 SELECT 
-	{[Data zg這szenia].[DateHierarchy].[2023].[11], [Data zg這szenia].[DateHierarchy].[2023].[12], [Data zg這szenia].[DateHierarchy].[2023].[Roznica]} ON COLUMNS,
+	{[Data zg這szenia].[DateHierarchy].[2023].[11],[Data zg這szenia].[DateHierarchy].[2023].[12], [Data zg這szenia].[2023].[12].[Roznica]} ON COLUMNS,
 	NON EMPTY{[JUNK AWARII].[Typ Awarii].Members} ON ROWS
 FROM AWARIE_LOKOMOTYWY
 WHERE [Measures].[AWARIA LOKOMOTYWY Count]

@@ -1,0 +1,11 @@
+/* Porównaj ob³o¿enie poci¹gów na wybranych trasach w stosunku do poprzednich miesiêcy */
+
+WITH
+	MEMBER [Data Rozpoczêcia Kursu].[2023].[12].[Roznica] AS '[Data Rozpoczêcia Kursu].[DateHierarchy].[2023].[12] - [Data Rozpoczêcia Kursu].[DateHierarchy].[2023].[11]'
+	
+
+SELECT 
+	{[Data Rozpoczêcia Kursu].[DateHierarchy].[2023].[11], [Data Rozpoczêcia Kursu].[DateHierarchy].[2023].[12], [Data Rozpoczêcia Kursu].[2023].[12].[Roznica]} ON COLUMNS,
+	NON EMPTY{([Stacja Pocz¹tkowa Kursu].[Nazwa].Children,[Stacja Koñcowa Kursu].[Nazwa].Children)} ON ROWS
+FROM KURS
+WHERE [Measures].[Liczba Pasa¿erów SUM]
